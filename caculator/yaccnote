@@ -1,0 +1,2 @@
+/* $1 is the value of the first term on the right of production */
+/* $$ represent the value on the top of the stack */
