@@ -311,7 +311,7 @@ extern int yylex (void);
 #undef YY_DECL
 #endif
 
-#line 38 "svg.l"
+#line 79 "svg.l"
 
 
 #line 318 "svg.lex.h"

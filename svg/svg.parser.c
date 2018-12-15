@@ -70,8 +70,16 @@
      GLYPHNAME = 259,
      PATH = 260,
      VALUE = 261,
-     TAG = 262,
-     OTHER = 263
+     GLYPHTAG = 262,
+     OTHER = 263,
+     XMLSTART = 264,
+     XMLEND = 265,
+     DOCTYPESTART = 266,
+     KEY = 267,
+     SVGROOTSTART = 268,
+     TAG = 269,
+     END = 270,
+     SELFEND = 271
    };
 #endif
 /* Tokens.  */
@@ -79,14 +87,22 @@
 #define GLYPHNAME 259
 #define PATH 260
 #define VALUE 261
-#define TAG 262
+#define GLYPHTAG 262
 #define OTHER 263
+#define XMLSTART 264
+#define XMLEND 265
+#define DOCTYPESTART 266
+#define KEY 267
+#define SVGROOTSTART 268
+#define TAG 269
+#define END 270
+#define SELFEND 271
 
 
 
 
 /* Copy the first part of user declarations.  */
-#line 7 "svg.y"
+#line 15 "svg.y"
 
     #include <stdio.h>
     #include <stdlib.h>
@@ -95,7 +111,7 @@
     #include <stdbool.h>
     #define YYSTYPE char*
     #define jsFuntion "var normalViewBox='0 0 1024 1024';var newViewBox='64 64 896 896';var fill='fill';var outline='outline';var twotone='twotone';function getNode(viewBox){var paths=[];for(var _i=1;_i<arguments.length;_i++){paths[_i-1]=arguments[_i]}return{tag:'svg',attrs:{viewBox:viewBox},children:paths.map(function(path){if(Array.isArray(path)){return{tag:'path',attrs:{fill:path[0],d:path[1]}}}return{tag:'path',attrs:{d:path}}})}}function getIcon(name,theme,icon){return{name:name,theme:theme,icon:icon}}\n"
-    #define templateStr "exports[%s] = getIcon(%s, fill, getNode(newViewBox, %s));\n"
+    #define templateStr "export[%s] = getIcon(%s, fill, getNode(newViewBox, %s));\n"
     #define zoomPrefix "\"zoom-"
     extern FILE * yyin;
     int svgnums = 0;
@@ -137,7 +153,7 @@ typedef int YYSTYPE;
 
 
 /* Line 216 of yacc.c.  */
-#line 141 "svg.parser.c"
+#line 157 "svg.parser.c"
 
 #ifdef short
 # undef short
@@ -352,20 +368,20 @@ union yyalloc
 /* YYFINAL -- State number of the termination state.  */
 #define YYFINAL  6
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   16
+#define YYLAST   42
 
 /* YYNTOKENS -- Number of terminals.  */
-#define YYNTOKENS  9
+#define YYNTOKENS  18
 /* YYNNTS -- Number of nonterminals.  */
-#define YYNNTS  6
+#define YYNNTS  12
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  8
+#define YYNRULES  21
 /* YYNRULES -- Number of states.  */
-#define YYNSTATES  16
+#define YYNSTATES  44
 
 /* YYTRANSLATE(YYLEX) -- Bison symbol number corresponding to YYLEX.  */
 #define YYUNDEFTOK  2
-#define YYMAXUTOK   263
+#define YYMAXUTOK   271
 
 #define YYTRANSLATE(YYX)						\
   ((unsigned int) (YYX) <= YYMAXUTOK ? yytranslate[YYX] : YYUNDEFTOK)
@@ -379,7 +395,7 @@ static const yytype_uint8 yytranslate[] =
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-       2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
+       2,     2,    17,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
@@ -399,7 +415,8 @@ static const yytype_uint8 yytranslate[] =
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     1,     2,     3,     4,
-       5,     6,     7,     8
+       5,     6,     7,     8,     9,    10,    11,    12,    13,    14,
+      15,    16
 };
 
 #if YYDEBUG
@@ -407,21 +424,30 @@ static const yytype_uint8 yytranslate[] =
    YYRHS.  */
 static const yytype_uint8 yyprhs[] =
 {
-       0,     0,     3,     6,     8,    12,    15,    19,    22
+       0,     0,     3,     7,    11,    15,    19,    25,    28,    30,
+      31,    37,    42,    45,    50,    53,    56,    59,    63,    66,
+      67,    70
 };
 
 /* YYRHS -- A `-1'-separated list of the rules' RHS.  */
 static const yytype_int8 yyrhs[] =
 {
-      10,     0,    -1,    10,    11,    -1,    11,    -1,    12,    13,
-      14,    -1,    12,    14,    -1,     7,     3,     6,    -1,     4,
-       6,    -1,     5,     6,    -1
+      19,     0,    -1,    20,    21,    22,    -1,     9,    28,    10,
+      -1,    11,    29,    17,    -1,    13,    28,    16,    -1,    13,
+      28,    17,    23,    15,    -1,    23,    24,    -1,    24,    -1,
+      -1,     7,    28,    25,    26,    16,    -1,     7,    28,    26,
+      16,    -1,    27,    16,    -1,    27,    17,    23,    15,    -1,
+       4,     6,    -1,     5,     6,    -1,    14,    28,    -1,    28,
+      12,     6,    -1,    12,     6,    -1,    -1,    29,     6,    -1,
+       6,    -1
 };
 
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    28,    28,    28,    29,    35,    37,    38,    45
+       0,    36,    36,    38,    40,    42,    43,    46,    46,    46,
+      48,    54,    55,    56,    62,    71,    77,    79,    79,    79,
+      83,    83
 };
 #endif
 
@@ -431,7 +457,10 @@ static const yytype_uint8 yyrline[] =
 static const char *const yytname[] =
 {
   "$end", "error", "$undefined", "UNICODE", "GLYPHNAME", "PATH", "VALUE",
-  "TAG", "OTHER", "$accept", "program", "svg", "code", "name", "path", 0
+  "GLYPHTAG", "OTHER", "XMLSTART", "XMLEND", "DOCTYPESTART", "KEY",
+  "SVGROOTSTART", "TAG", "END", "SELFEND", "'>'", "$accept", "program",
+  "xml", "doctype", "svgroot", "svgele", "svgbody", "glyname", "path",
+  "svgtag", "kv", "v", 0
 };
 #endif
 
@@ -440,20 +469,25 @@ static const char *const yytname[] =
    token YYLEX-NUM.  */
 static const yytype_uint16 yytoknum[] =
 {
-       0,   256,   257,   258,   259,   260,   261,   262,   263
+       0,   256,   257,   258,   259,   260,   261,   262,   263,   264,
+     265,   266,   267,   268,   269,   270,   271,    62
 };
 # endif
 
 /* YYR1[YYN] -- Symbol number of symbol that rule YYN derives.  */
 static const yytype_uint8 yyr1[] =
 {
-       0,     9,    10,    10,    11,    11,    12,    13,    14
+       0,    18,    19,    20,    21,    22,    22,    23,    23,    23,
+      24,    24,    24,    24,    25,    26,    27,    28,    28,    28,
+      29,    29
 };
 
 /* YYR2[YYN] -- Number of symbols composing right hand side of rule YYN.  */
 static const yytype_uint8 yyr2[] =
 {
-       0,     2,     2,     1,     3,     2,     3,     2,     2
+       0,     2,     3,     3,     3,     3,     5,     2,     1,     0,
+       5,     4,     2,     4,     2,     2,     2,     3,     2,     0,
+       2,     1
 };
 
 /* YYDEFACT[STATE-NAME] -- Default rule to reduce with in state
@@ -461,29 +495,37 @@ static const yytype_uint8 yyr2[] =
    means the default is an error.  */
 static const yytype_uint8 yydefact[] =
 {
-       0,     0,     0,     3,     0,     0,     1,     2,     0,     0,
-       0,     5,     6,     7,     8,     4
+       0,    19,     0,     0,     0,     0,     1,     0,     0,    18,
+       3,     0,    21,     0,    19,     2,    17,    20,     4,     0,
+       5,     9,    19,    19,     0,     8,     0,     0,    16,     6,
+       7,    12,     9,     0,     0,     0,     0,     0,    14,    15,
+       0,    11,    13,    10
 };
 
 /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int8 yydefgoto[] =
 {
-      -1,     2,     3,     4,    10,    11
+      -1,     2,     3,     8,    15,    24,    25,    35,    36,    26,
+       5,    13
 };
 
 /* YYPACT[STATE-NUM] -- Index in YYTABLE of the portion describing
    STATE-NUM.  */
-#define YYPACT_NINF -5
+#define YYPACT_NINF -25
 static const yytype_int8 yypact[] =
 {
-      -4,     1,     0,    -5,    -3,    -1,    -5,    -5,     2,     3,
-       5,    -5,    -5,    -5,    -5,    -5
+      -3,    -8,    20,    18,    15,    -7,   -25,    24,    19,   -25,
+     -25,    25,   -25,    -5,    -8,   -25,   -25,   -25,   -25,     6,
+     -25,    12,    -8,    -8,     0,   -25,    11,     4,    21,   -25,
+     -25,   -25,    12,    28,    29,    31,    22,    10,   -25,   -25,
+      23,   -25,   -25,   -25
 };
 
 /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-      -5,    -5,     4,    -5,    -5,     6
+     -25,   -25,   -25,   -25,   -25,     5,   -24,   -25,     7,   -25,
+     -12,   -25
 };
 
 /* YYTABLE[YYPACT[STATE-NUM]].  What to do in state STATE-NUM.  If
@@ -493,22 +535,31 @@ static const yytype_int8 yypgoto[] =
 #define YYTABLE_NINF -1
 static const yytype_uint8 yytable[] =
 {
-       6,     8,     9,     1,     5,    12,     7,     1,    13,    14,
-       9,     0,     0,     0,     0,     0,    15
+      30,    17,    19,    10,     4,    11,     1,    22,    33,    34,
+      27,    28,    18,    30,    23,    29,    11,    22,    11,    22,
+       6,     9,    20,    21,    23,    42,    23,    31,    32,     7,
+      12,    16,    14,    11,    38,    39,    34,    37,    41,    43,
+       0,     0,    40
 };
 
 static const yytype_int8 yycheck[] =
 {
-       0,     4,     5,     7,     3,     6,     2,     7,     6,     6,
-       5,    -1,    -1,    -1,    -1,    -1,    10
+      24,     6,    14,    10,    12,    12,     9,     7,     4,     5,
+      22,    23,    17,    37,    14,    15,    12,     7,    12,     7,
+       0,     6,    16,    17,    14,    15,    14,    16,    17,    11,
+       6,     6,    13,    12,     6,     6,     5,    32,    16,    16,
+      -1,    -1,    35
 };
 
 /* YYSTOS[STATE-NUM] -- The (internal number of the) accessing
    symbol of state STATE-NUM.  */
 static const yytype_uint8 yystos[] =
 {
-       0,     7,    10,    11,    12,     3,     0,    11,     4,     5,
-      13,    14,     6,     6,     6,    14
+       0,     9,    19,    20,    12,    28,     0,    11,    21,     6,
+      10,    12,     6,    29,    13,    22,     6,     6,    17,    28,
+      16,    17,     7,    14,    23,    24,    27,    28,    28,    15,
+      24,    16,    17,     4,     5,    25,    26,    23,     6,     6,
+      26,    16,    15,    16
 };
 
 #define yyerrok		(yyerrstatus = 0)
@@ -1322,34 +1373,40 @@ yyreduce:
   YY_REDUCE_PRINT (yyn);
   switch (yyn)
     {
-        case 3:
-#line 28 "svg.y"
-    {printf("dede");;}
+        case 2:
+#line 36 "svg.y"
+    {printf("svg file reduce\n");;}
+    break;
+
+  case 3:
+#line 38 "svg.y"
+    {printf("xml reduce\n");;}
     break;
 
   case 4:
-#line 29 "svg.y"
-    {
-    svgnums++;
-    char svg_key_name[1000];
-    tansformName(svg_key_name, svg_name);
-    fprintf(fp, templateStr, svg_key_name, svg_name, svg_path);
-;}
-    break;
-
-  case 5:
-#line 35 "svg.y"
-    {svgnums++;;}
+#line 40 "svg.y"
+    {printf("doctype reduce\n");;}
     break;
 
   case 6:
-#line 37 "svg.y"
-    {;}
+#line 43 "svg.y"
+    {printf("svg root reduce");;}
     break;
 
-  case 7:
-#line 38 "svg.y"
+  case 10:
+#line 48 "svg.y"
     {
+        svgnums++;
+        char svg_key_name[1000];
+        tansformName(svg_key_name, svg_name);
+        fprintf(fp, templateStr, svg_key_name, svg_name, svg_path);
+    ;}
+    break;
+
+  case 14:
+#line 62 "svg.y"
+    {
+    printf("glyphname reduce\n");
     memset(svg_name, 0, sizeof(svg_name));
     strcat(svg_name, zoomPrefix);
     strcat(svg_name, (yyvsp[(2) - (2)]) + 1);
@@ -1358,17 +1415,36 @@ yyreduce:
 ;}
     break;
 
-  case 8:
-#line 45 "svg.y"
+  case 15:
+#line 71 "svg.y"
     {
+    printf("path reduce\n");
     strcpy(svg_path, (yyvsp[(2) - (2)]));
-    // svg_path = $2;
+;}
+    break;
+
+  case 16:
+#line 77 "svg.y"
+    {printf("svgtag reduce\n");}
+    break;
+
+  case 19:
+#line 79 "svg.y"
+    {
+    printf("key-value reduce\n");
+;}
+    break;
+
+  case 21:
+#line 83 "svg.y"
+    {
+    printf("value reduce\n");
 ;}
     break;
 
 
 /* Line 1267 of yacc.c.  */
-#line 1372 "svg.parser.c"
+#line 1448 "svg.parser.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -1582,7 +1658,7 @@ yyreturn:
 }
 
 
-#line 49 "svg.y"
+#line 86 "svg.y"
 
 
 int yyerror(char * s) {
@@ -1592,7 +1668,7 @@ int yyerror(char * s) {
 
 int main(void) {
     printf("zoomprefix: %s\n", zoomPrefix);
-    yyin = fopen("./test", "r");
+    yyin = fopen("./test.svg", "r");
     fp = fopen("./zoomicon.js", "w");
     if (fp == NULL || yyin == NULL) exit(1);
     fwrite(jsFuntion, 1, strlen(jsFuntion), fp);

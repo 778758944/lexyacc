@@ -43,8 +43,16 @@
      GLYPHNAME = 259,
      PATH = 260,
      VALUE = 261,
-     TAG = 262,
-     OTHER = 263
+     GLYPHTAG = 262,
+     OTHER = 263,
+     XMLSTART = 264,
+     XMLEND = 265,
+     DOCTYPESTART = 266,
+     KEY = 267,
+     SVGROOTSTART = 268,
+     TAG = 269,
+     END = 270,
+     SELFEND = 271
    };
 #endif
 /* Tokens.  */
@@ -52,8 +60,16 @@
 #define GLYPHNAME 259
 #define PATH 260
 #define VALUE 261
-#define TAG 262
+#define GLYPHTAG 262
 #define OTHER 263
+#define XMLSTART 264
+#define XMLEND 265
+#define DOCTYPESTART 266
+#define KEY 267
+#define SVGROOTSTART 268
+#define TAG 269
+#define END 270
+#define SELFEND 271
 
 
 
